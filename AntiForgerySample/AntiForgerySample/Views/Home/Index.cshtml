@@ -1,0 +1,63 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title.</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+        </div>
+    </section>
+}
+<h3>We suggest the following:</h3>
+<ol class="round">
+    <li class="one">
+        <h5>Anti-Forgery Token sample</h5>
+    </li>
+    <li>
+        <a href="#" onclick="return ajaxPostWithToken();">click here to pass forgery token with ajax post</a>
+        <a href="#" onclick="return ajaxPostWithOutToken();">click here not to pass forgery token with ajax post</a>
+    </li>
+</ol>
+<script type="text/javascript">
+    function ajaxPostWithToken() {
+        debugger;
+        var forgeryId = $("#forgeryToken").val();
+        $.ajax({
+            url: 'HOME/POSTSAMPLEACTION',
+            type: "POST",
+            data: { name: "test" },
+            async: true,
+            dataType: "json",
+            headers: {
+                'VerificationToken': forgeryId
+            },
+            success: function (returnVal) {
+                alert(returnVal);
+            },
+            error: function (data) {
+                alert("failed");
+            },
+        });
+        return false;
+    }
+    function ajaxPostWithOutToken() {
+        debugger;
+        $.ajax({
+            url: 'HOME/POSTSAMPLEACTION',
+            type: "POST",
+            data: { name: "test" },
+            async: true,
+            dataType: "json",
+            success: function (returnVal) {
+                alert(returnVal);
+            },
+            error: function (data) {
+                alert("failed");
+            },
+        });
+        return false;
+    }
+</script>
